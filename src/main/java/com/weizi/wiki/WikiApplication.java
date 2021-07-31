@@ -15,6 +15,7 @@ public class WikiApplication {
 
         SpringApplication app = new SpringApplication(WikiApplication.class);
 
+
         Environment env  = app.run(args).getEnvironment();
         logger.info("启动成功");
         logger.info("地址：\thttp:127.0.0.1:{}",env.getProperty("server.port"));
