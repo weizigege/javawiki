@@ -3,7 +3,7 @@ GET http://localhost:8080/hello
 #Accept: application/json
 
 > {%
- client.test("test-hello", function() {
+   client.test("test-hello", function() {
    client.log("测试/hello接口");
    client.log(response.body);
    client.log(JSON.stringify(response.body)); // 虽然idea没有提示JSON，但是可以用
