@@ -11,5 +11,10 @@ GET http://localhost:8080/hello
    client.assert(response.body === "hello", "结果验证失败");
  });
 %}
-###
+###w
+GET http://localhost:8080/test
+Content-Type: application/json
 
+
+
+###
