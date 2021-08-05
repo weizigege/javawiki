@@ -40,7 +40,8 @@
                              targetPackage="com.weizi.wiki.mapper"
                              type="XMLMAPPER"/>
 
-        <table tableName="test" domainObjectName="Test"/>
+<!--        <table tableName="test" domainObjectName="Test"/>-->
+        <table tableName="ebook" domainObjectName="Ebook"/>
         <!--<table tableName="ebook"/>-->
         <!--<table tableName="category"/>-->
         <!--<table tableName="doc"/>-->
