@@ -1,7 +1,9 @@
 package com.weizi.wiki.controller;
 
 import com.weizi.wiki.domain.Ebook;
+import com.weizi.wiki.req.EbookReq;
 import com.weizi.wiki.resp.CommonResp;
+import com.weizi.wiki.resp.EbookResp;
 import com.weizi.wiki.service.EbookService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,18 +25,14 @@ public class EbookController {
     @Resource
     private EbookService ebookService;
 
-    @Value("${ebook.hello:Ebook}")
-    private String ebookHello;
 
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello" + ebookHello;
-    }
+
+
 
     @GetMapping("/list")
-    public CommonResp list() {
-        CommonResp<List<Ebook>> commonResp = new CommonResp();
-        List<Ebook> list = ebookService.list();
+    public CommonResp list(EbookReq req) {
+        CommonResp<List<EbookResp>> commonResp = new CommonResp();
+        List<EbookResp> list = ebookService.list(req);
         commonResp.setContent(list);
         return commonResp;
     }

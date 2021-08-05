@@ -1,12 +1,17 @@
 package com.weizi.wiki.service;
 
 import com.weizi.wiki.domain.Ebook;
+import com.weizi.wiki.domain.EbookExample;
 import com.weizi.wiki.domain.Test;
 import com.weizi.wiki.mapper.EbookMapper;
 import com.weizi.wiki.mapper.TestMapper;
+import com.weizi.wiki.req.EbookReq;
+import com.weizi.wiki.resp.EbookResp;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +25,18 @@ public class EbookService {
     @Resource
     private EbookMapper ebookMapper;
 
-    public List<Ebook> list(){
-        return ebookMapper.selectByExample(null);
+    public List<EbookResp> list(EbookReq req){
+        EbookExample ebookExample = new EbookExample();
+        EbookExample.Criteria criteria = ebookExample.createCriteria();
+        criteria.andNameLike("%"+req.getName()+"%");
+        List<Ebook> ebooks = ebookMapper.selectByExample(ebookExample);
+        List<EbookResp> ebookResps = new ArrayList<>();
+        for (Ebook ebook : ebooks) {
+            EbookResp ebookResp = new EbookResp();
+            BeanUtils.copyProperties(ebook,ebookResp);
+            ebookResps.add(ebookResp);
+        }
+        return ebookResps;
     }
 
 }
