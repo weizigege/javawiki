@@ -7,6 +7,7 @@ import com.weizi.wiki.mapper.EbookMapper;
 import com.weizi.wiki.mapper.TestMapper;
 import com.weizi.wiki.req.EbookReq;
 import com.weizi.wiki.resp.EbookResp;
+import com.weizi.wiki.util.CopyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +33,14 @@ public class EbookService {
         List<Ebook> ebooks = ebookMapper.selectByExample(ebookExample);
         List<EbookResp> ebookResps = new ArrayList<>();
         for (Ebook ebook : ebooks) {
-            EbookResp ebookResp = new EbookResp();
-            BeanUtils.copyProperties(ebook,ebookResp);
+            /*EbookResp ebookResp = new EbookResp();
+            BeanUtils.copyProperties(ebook,ebookResp);*/
+            EbookResp ebookResp = CopyUtil.copy(ebook, EbookResp.class);
             ebookResps.add(ebookResp);
         }
-        return ebookResps;
+        List<EbookResp> ebookRespslist = CopyUtil.copyList(ebooks, EbookResp.class);
+
+        return ebookRespslist;
     }
 
 }
