@@ -12,14 +12,14 @@ GET http://localhost:8080/hello
  });
 %}
 ###w
-GET http://localhost:8080/test
+GET http://localhost:8081/test
 Content-Type: application/json
 
 
 
 ###
 
-GET http://localhost:8080/ebook/list?name=spring
+GET http://localhost:8081/ebook/list?name=spring
 Accept: application/json
 
 ###
