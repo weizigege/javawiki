@@ -46,27 +46,36 @@
     <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      Content
+      <pre> {{ebooks}}}</pre>
+      <pre> {{ebooks}}}</pre>
     </a-layout-content>
   </a-layout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-import axios from "axios";
+  import { defineComponent,onMounted,ref } from 'vue';
+  import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+  import axios from "axios";
 
-export default defineComponent({
-  name: 'Home',
-  setup(){
-    console.log("setup");
-    axios.get("http://localhost:8081/ebook/list?name=spring")
-            .then(function (response) {
-        console.log(response);
-    })
-  }
-  /*components: {
-    HelloWorld,
-  },*/
-});
+  export default defineComponent({
+    name: 'Home',
+    setup(){
+      const ebooks = ref();
+      console.log("setup");
+      onMounted(function () {
+        axios.get("http://localhost:8081/ebook/list?name=spring")
+                .then(function (response) {
+                  console.log(response);
+                  const data = response.data;
+                  ebooks.value=data;
+                });
+      });
+      return{
+        ebooks
+      }
+    }
+    /*components: {
+      HelloWorld,
+    },*/
+  });
 </script>
