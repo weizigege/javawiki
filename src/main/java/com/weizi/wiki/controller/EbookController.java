@@ -34,6 +34,7 @@ public class EbookController {
         CommonResp<List<EbookResp>> commonResp = new CommonResp();
         List<EbookResp> list = ebookService.list(req);
         commonResp.setContent(list);
+
         return commonResp;
     }
 }
