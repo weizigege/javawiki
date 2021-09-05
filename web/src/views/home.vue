@@ -106,7 +106,7 @@
 
       console.log("setup");
       onMounted(function () {
-        axios.get("http://localhost:8081/ebook/list")
+        axios.get("/ebook/list")
                 .then((response)=> {
                   // console.log(response);
                   const data = response.data.content;
