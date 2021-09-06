@@ -1,5 +1,7 @@
 package com.weizi.wiki.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.weizi.wiki.config.WikiApplication;
 import com.weizi.wiki.domain.Ebook;
 import com.weizi.wiki.domain.EbookExample;
@@ -8,6 +10,7 @@ import com.weizi.wiki.mapper.EbookMapper;
 import com.weizi.wiki.mapper.TestMapper;
 import com.weizi.wiki.req.EbookReq;
 import com.weizi.wiki.resp.EbookResp;
+import com.weizi.wiki.resp.PageResp;
 import com.weizi.wiki.util.CopyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,20 +37,26 @@ public class EbookService {
     private static final Logger logger
             = LoggerFactory.getLogger(EbookService.class);
 
-    public List<EbookResp> list(EbookReq req){
+    public PageResp<EbookResp> list(EbookReq req){
+
         EbookExample ebookExample = new EbookExample();
         EbookExample.Criteria criteria = ebookExample.createCriteria();
         if(!ObjectUtils.isEmpty(req.getName())){
             criteria.andNameLike("%"+req.getName()+"%");
         }
+        PageHelper.startPage(req.getPage(),req.getSize());
         List<Ebook> ebooks = ebookMapper.selectByExample(ebookExample);
-        List<EbookResp> ebookResps = new ArrayList<>();
+        PageInfo<Ebook> pageInfo = new PageInfo<>(ebooks);
+        /*List<EbookResp> ebookResps = new ArrayList<>();
         for (Ebook ebook : ebooks) {
             EbookResp ebookResp = CopyUtil.copy(ebook, EbookResp.class);
             ebookResps.add(ebookResp);
-        }
+        }*/
         List<EbookResp> ebookRespslist = CopyUtil.copyList(ebooks, EbookResp.class);
-        return ebookRespslist;
+        PageResp<EbookResp> resp =new PageResp<>();
+        resp.setTotal((int) pageInfo.getTotal());
+        resp.setList(ebookRespslist);
+        return resp;
     }
 
 }
