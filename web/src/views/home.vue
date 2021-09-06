@@ -79,19 +79,21 @@
   import { StarOutlined, LikeOutlined, MessageOutlined } from '@ant-design/icons-vue';
   import axios from "axios";
 
-  const listData: Record<string, string>[] = [];
   const ebooks = ref();
-  for (let i = 0; i < 23; i++) {
-    listData.push({
-      href: 'https://www.antdv.com/',
-      title: `ant design vue part ${i}`,
-      avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-      description:
-              'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-      content:
-              'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-    });
-  }
+  /*const listData: Record<string, string>[] = [];
+
+
+    for (let i = 0; i < 23; i++) {
+      listData.push({
+        href: 'https://www.antdv.com/',
+        title: `ant design vue part ${i}`,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        description:
+                'Ant Design, a design language for background applications, is refined by Ant UED Team.',
+        content:
+                'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
+      });
+    }*/
 
 
   export default defineComponent({
@@ -102,15 +104,17 @@
       MessageOutlined,
     },
     setup(){
-      console.log(listData)
+      // console.log(listData)
 
       console.log("setup");
       onMounted(function () {
-        axios.get("/ebook/list")
-                .then((response)=> {
+        axios.get("/ebook/list",{params:{
+          page:1,
+          size:1000
+          }}).then((response)=> {
                   // console.log(response);
-                  const data = response.data.content;
-                  ebooks.value=data;
+                  const data = response.data;
+                  ebooks.value=data.content.list;
                 });
       });
       const pagination = {
@@ -125,7 +129,7 @@
         { type: 'MessageOutlined', text: '2' },
       ];
       return {
-        listData,
+        // listData,
         pagination,
         actions,
         ebooks
