@@ -1,18 +1,14 @@
 package com.weizi.wiki.controller;
 
-import com.weizi.wiki.domain.Ebook;
-import com.weizi.wiki.req.EbookReq;
+import com.weizi.wiki.req.EbookQueryReq;
+import com.weizi.wiki.req.EbookSaveReq;
 import com.weizi.wiki.resp.CommonResp;
-import com.weizi.wiki.resp.EbookResp;
+import com.weizi.wiki.resp.EbookQueryResp;
 import com.weizi.wiki.resp.PageResp;
 import com.weizi.wiki.service.EbookService;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @program: wiki
@@ -31,11 +27,20 @@ public class EbookController {
 
 
     @GetMapping("/list")
-    public CommonResp list(EbookReq req) {
-        CommonResp<PageResp<EbookResp>> commonResp = new CommonResp();
-        PageResp<EbookResp> list = ebookService.list(req);
+    public CommonResp list(EbookQueryReq req) {
+        CommonResp<PageResp<EbookQueryResp>> commonResp = new CommonResp();
+        PageResp<EbookQueryResp> list = ebookService.list(req);
         commonResp.setContent(list);
 
         return commonResp;
     }
+    @PostMapping("/save")
+    public CommonResp save(@RequestBody EbookSaveReq req) {
+        CommonResp commonResp = new CommonResp();
+        ebookService.save(req);
+        return commonResp;
+    }
+
+
+
 }
