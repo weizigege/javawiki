@@ -10,9 +10,11 @@ import com.weizi.wiki.req.EbookSaveReq;
 import com.weizi.wiki.resp.EbookQueryResp;
 import com.weizi.wiki.resp.PageResp;
 import com.weizi.wiki.util.CopyUtil;
+import com.weizi.wiki.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import javax.annotation.Resource;
@@ -26,6 +28,10 @@ import java.util.List;
  **/
 @Service
 public class EbookService {
+    //花纵酒
+    @Resource
+    SnowFlake snowFlake;
+
     @Resource
     private EbookMapper ebookMapper;
 
@@ -57,9 +63,15 @@ public class EbookService {
     public void save(EbookSaveReq req) {
         Ebook ebook = CopyUtil.copy(req, Ebook.class);
         if (ObjectUtils.isEmpty(req.getId())){
+            ebook.setId(snowFlake.nextId());
             ebookMapper.insert(ebook);
+        }else {
+            ebookMapper.updateByPrimaryKey(ebook);
         }
-        ebookMapper.updateByPrimaryKey(ebook);
+    }
 
+    public int delete(Long id) {
+        int i = ebookMapper.deleteByPrimaryKey(id);
+        return i;
     }
 }

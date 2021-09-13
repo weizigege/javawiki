@@ -6,6 +6,8 @@ import com.weizi.wiki.resp.CommonResp;
 import com.weizi.wiki.resp.EbookQueryResp;
 import com.weizi.wiki.resp.PageResp;
 import com.weizi.wiki.service.EbookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,8 +24,8 @@ public class EbookController {
     @Resource
     private EbookService ebookService;
 
-
-
+    private static final Logger LOG
+    = LoggerFactory.getLogger(EbookController.class);
 
 
     @GetMapping("/list")
@@ -34,6 +36,7 @@ public class EbookController {
 
         return commonResp;
     }
+
     @PostMapping("/save")
     public CommonResp save(@RequestBody EbookSaveReq req) {
         CommonResp commonResp = new CommonResp();
@@ -41,6 +44,12 @@ public class EbookController {
         return commonResp;
     }
 
-
+    @DeleteMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable Long id) {
+        CommonResp resp = new CommonResp<>();
+        int delete = ebookService.delete(id);
+        LOG.info("delete:"+delete);
+        return resp;
+    }
 
 }
