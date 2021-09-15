@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * @program: wiki
@@ -29,7 +30,7 @@ public class EbookController {
 
 
     @GetMapping("/list")
-    public CommonResp list(EbookQueryReq req) {
+    public CommonResp list(@Valid EbookQueryReq req) {
         CommonResp<PageResp<EbookQueryResp>> commonResp = new CommonResp();
         PageResp<EbookQueryResp> list = ebookService.list(req);
         commonResp.setContent(list);
@@ -38,7 +39,7 @@ public class EbookController {
     }
 
     @PostMapping("/save")
-    public CommonResp save(@RequestBody EbookSaveReq req) {
+    public CommonResp save(@Valid @RequestBody EbookSaveReq req) {
         CommonResp commonResp = new CommonResp();
         ebookService.save(req);
         return commonResp;

@@ -1,5 +1,9 @@
 package com.weizi.wiki.req;
 
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
+
 /**
  * @program: wiki
  * @description
@@ -7,8 +11,11 @@ package com.weizi.wiki.req;
  * @create: 2021-09-06 23:17
  **/
 public class PageReq {
+
     private int page;
 
+    @NotNull(message = "【每页条数不能为空】")
+    @Max(value = 1000, message = "【每页条数不能超过1000】")
     private int size;
 
     public int getPage() {

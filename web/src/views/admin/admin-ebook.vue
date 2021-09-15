@@ -118,6 +118,8 @@
                             page: pagination.value.current,
                             size: pagination.value.pageSize
                         });
+                    }else {
+                        message.error(data.message);
                     }
                 })
             };
