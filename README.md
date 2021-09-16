@@ -46,7 +46,8 @@ insert INTO `ebook` (id,name,description) values (2,'天官赐福','百无禁忌
    `id` bigint not null comment 'id',
    `parent` bigint not null DEFAULT 0 comment '父id',
    `name` varchar(50) not null  COMMENT '名称',
-   `sort` int COMMENT '顺序'
+   `sort` int COMMENT '顺序',
+    primary key `id`
    ) ENGINE = innodb DEFAULT charset=utf8mb4 COMMENT='分类'
    插入数据
    insert into `category` (id,parent,name,sort) VALUES (100,000,'前端开发',100);
